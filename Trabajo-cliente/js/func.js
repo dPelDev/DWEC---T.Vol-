@@ -1,19 +1,6 @@
 const form_dar = document.querySelector("#dar_citas");
 
-document.getElementById("dar").addEventListener("click", () => {
-  form_dar.showModal();
-});
-document.getElementById("cerrar").addEventListener("click", () => {
-  form_dar.close();
-});
-
-const tabla_ver = document.querySelector("#ver_citas");
-document.getElementById("ver").addEventListener("click", () => {
-  tabla_ver.showModal();
-});
-document.getElementById("cerrartabla").addEventListener("click", () => {
-  tabla_ver.close();
-});
+//CrearCitas
 
 function validarTel() {
   var telef = new RegExp("^(\\+34|0034|34)?[6789]\\d{8}$");
@@ -62,8 +49,6 @@ function validarDNI() {
     return "DNI CORRECTO ";
   }
 }
-//ArrayCitas
-const citas = [];
 
 //Objeto Cita
 class Cita {
@@ -72,19 +57,24 @@ class Cita {
     apellidos,
     telefono,
     dni,
-    fechaNacimiento,
-    observaciones,
     fechaCita,
-    id
+    obs,
+    id,
+    fechaNacimiento
+
+   
   ) {
     this.nombre = nombre;
     this.apellidos = apellidos;
     this.telefono = telefono;
     this.dni = dni;
-    this.fechaNacimiento = fechaNacimiento;
-    this.observaciones = observaciones;
     this.fechaCita = fechaCita;
+    this.obs = obs;
     this.id = id;
+    this.fechaNacimiento = fechaNacimiento;
+    ;
+   
+    
   }
 
   toJSON() {
@@ -93,10 +83,13 @@ class Cita {
       apellidos: this.apellidos,
       telefono: this.telefono,
       dni: this.dni,
-      fechaNacimiento: this.fechaNacimiento,
-      observaciones: this.observaciones,
       fechaCita: this.fechaCita,
-      id: this.id
+      obs: this.obs,
+      id: this.id,
+      fechaNacimiento: this.fechaNacimiento,
+
+
+
     };
   }
 }
@@ -128,16 +121,19 @@ function guardarDatos() {
         apellidos,
         telefono,
         dni,
-        fechaNacimiento,
-        obs,
         fechaCita,
-        id = generarId()
+        obs,
+        (id = generarId()),
+        fechaNacimiento
+
+
+
       );
-      console.log(generarId());
       citas.push(nuevaCita);
-      console.log(citas);
       resetFormulario();
       guardarCitasEnCookies();
+      cargarCitasDesdeCookies();
+      actualizarTabla();
 
       Swal.fire({
         position: "top-end",
@@ -170,6 +166,15 @@ function guardarDatos() {
   }
 }
 
+function verCitas() {
+  document.getElementById("verCitas").removeAttribute("hidden");  
+}
+
+function ocultarCitas() {
+  document.getElementById("verCitas").setAttribute("hidden","");
+  
+}
+
 function resetFormulario() {
   document.getElementById("validationDefault01").value = "";
   document.getElementById("validationDefault02").value = "";
@@ -196,3 +201,145 @@ function guardarNuevaCita() {
     limpiarFormulario();
   }
 }
+
+//Cargar y modificar/eliminar citas
+
+// Lógica para cargar citas almacenadas en las cookies
+function cargarCitasDesdeCookies() {
+  try {
+    const citasGuardadas = JSON.parse(localStorage.getItem("citas")) || [];
+
+    // Convertir los objetos JSON a instancias de citas
+    citas = citasGuardadas.map(
+      (cita) =>
+        new Cita(
+          cita.nombre,
+          cita.apellidos,
+          cita.telefono,
+          cita.dni,          
+          cita.fechaCita,
+          cita.obs,
+          cita.id,
+          cita.fechaNacimiento
+
+        )
+    );
+  } catch (error) {
+    console.error("Error al cargar las citas desde las cookies:", error);
+    // Puedes manejar el error de alguna manera (por ejemplo, reiniciar las citas)
+    citas = [];
+  }
+}
+
+// Función para eliminar una cita
+function eliminarCita(index) {
+   citas.splice(index, 1);
+   actualizarTabla();
+   guardarCitasEnCookies();
+}
+
+//Función para ver el ID
+function verId(index) {
+  const cita = citas[index];
+  Swal.fire("El ID de este CLIENTE es: ", cita.id);
+
+  
+}
+// Función para cargar una cita para modificar
+ function cargarCitaParaModificar(index) {
+
+   const cita = citas[index];
+   document.getElementById("validationDefault01").value = cita.nombre;
+   document.getElementById("validationDefault02").value = cita.apellidos;
+   document.getElementById("validationDefault03").value = cita.telefono;
+   document.getElementById("validationDefault04").value = cita.dni;
+   document.getElementById("validationDefault06").value = cita.fechaCita;
+   document.getElementById("validationDefault07").value = cita.obs;
+   document.getElementById("validationDefault05").value = cita.fechaNacimiento;
+
+   eliminarCita(index);
+ }
+
+
+ function modificarCita() {
+  const citaIndex = citas.findIndex((cita) => cita.id === id);
+
+  if (citaIndex !== -1) {
+    citas[citaIndex].nombre = document.getElementById("validationDefault01").value;
+    citas[citaIndex].apellidos = document.getElementById("validationDefault02").value;
+    citas[citaIndex].telefono = document.getElementById("validationDefault03").value;
+    citas[citaIndex].dni = document.getElementById("validationDefault04").value;
+    citas[citaIndex].fechaCita = document.getElementById("validationDefault06").value;
+    citas[citaIndex].obs = document.getElementById("validationDefault07").value;
+    citas[citaIndex].fechaNacimiento = document.getElementById("validationDefault05").value;
+
+
+    actualizarTabla();
+    limpiarFormulario();
+    guardarCitasEnCookies();
+  } else {
+    alert("No se encontró la cita para modificar.");
+  }
+}
+
+
+function actualizarTabla() {
+  const citasTableBody = document.getElementById("citasTableBody");
+
+  // Limpiar el contenido de las citas para mostrar
+  citasTableBody.innerHTML = "";
+
+  // Verificar si hay citas para mostrar
+  if (citas.length > 0) {
+    // Mostrar las citas en la tabla
+    for (let i = 0; i < citas.length; i++) {
+      const cita = citas[i];
+      const row = citasTableBody.insertRow(i);
+
+      // Orden
+      const orderCell = row.insertCell(0);
+      orderCell.textContent = i + 1;
+
+      // Nombre
+      const nombreCell = row.insertCell(1);
+      nombreCell.textContent = cita.nombre;
+
+      // Apellidos
+      const apellidosCell = row.insertCell(2);
+      apellidosCell.textContent = cita.apellidos;
+
+      // Teléfono
+      const telefonoCell = row.insertCell(3);
+      telefonoCell.textContent = cita.telefono;
+
+      // DNI
+      const dniCell = row.insertCell(4);
+      dniCell.textContent = cita.dni;
+
+      //FechaCita
+      const fechaCitamCell = row.insertCell(5);
+      fechaCitamCell.textContent = cita.fechaCita;
+
+      // obs
+      const obsCell = row.insertCell(6);
+      obsCell.textContent = cita.obs;
+
+      // Acciones
+      const actionsCell = row.insertCell(7);
+      actionsCell.innerHTML = `<button onclick="eliminarCita(${i})">Eliminar</button> 
+                                  <button onclick="cargarCitaParaModificar(${i})">Modificar</button>
+                                  <button onclick="verId(${i})">Ver ID</button>`;
+    }
+  } else {
+    // Mostrar mensaje de datos vacío si no hay citas
+    const emptyRow = citasTableBody.insertRow(0);
+    const emptyCell = emptyRow.insertCell(0);
+    emptyCell.textContent = "No hay ninguna cita que mostrar";
+    emptyCell.colSpan = 10; // Ajusta esto según el número de columnas
+  }
+}
+
+
+
+cargarCitasDesdeCookies();
+actualizarTabla();

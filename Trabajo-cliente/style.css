@@ -1,26 +1,7 @@
-/* Barra de navegacion */
-.navbar {
-  padding: 2rem;
-  background-color: darkcyan;
-  color: white;
-}
-
-.navbar-collapse {
-  align-items: center;
-  justify-content: space-between;
-}
-.container-fluid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-item img {
-  height: 100px;
-  margin: 0px 100px;
-}
 /* Estilos generales */
+body{
+  color: darkcyan;
+}
 
 section {
   display: flex;
@@ -37,24 +18,8 @@ h1 {
   margin-left: 250px;
 }
 
-.seccion-oscura {
-  background-color: darkcyan;
-}
 
-.seccion-clara {
-  background-color: white;
-}
 
-.seccion-texto {
-  font-size: 1.2rem;
-  font-family: Playfair Display, sans-serif;
-}
-
-.texto {
-  font-family: Playfair Display, sans-serif;
-  font-weight: bold;
-  color: white;
-}
 
 /* Seccion Portada */
 
@@ -72,104 +37,107 @@ h1 {
   margin: 20px;
 }
 
-/* Citas */
-
-.seccion-titulo {
-  font-size: 3rem;
-  padding: 15px 0;
-  font-family: "Girassol", cursive;
-}
-
-.citas {
-  padding: 50px;
-}
-.dar button {
-  padding: 150px;
-  background-color: white;
-  border-radius: 5%;
-  border: 2px solid darkcyan;
-  font-family: "Girassol", cursive;
-  font-size: 2.5rem;
-  margin-right: 60px;
-}
-
-.ver button {
-  padding: 150px;
-  background-color: white;
-  border-radius: 5%;
-  border: 2px solid darkcyan;
-  font-family: "Girassol", cursive;
-  font-size: 2.5rem;
-  margin-left: 60px;
-}
-
-/* Footer */
-
-.footer {
-  min-height: 500px;
-}
-
-.footer-logo {
-  height: 200px;
-  border-radius: 5%;
-  margin: 10px;
-}
-
-.footer-texto {
-  font-size: 1.5rem;
-  padding: 20px;
-  margin-bottom: 30px;
+.portada h1{
   font-family: Playfair Display, sans-serif;
+  font-weight: bold;
   color: white;
-}
+  margin-top: -70px;
+  margin-left: 300px;
 
+}
 /* Dar Citas */
-.dialog {
-  margin-top: 300px;
-  max-width: 600px;
-  justify-content: center;
-  align-items: center;
-}
 
-.dar_citas {
-  padding: 10px;
+
+.formulario{
+
+  padding: 35px;
   background-color: darkcyan;
-  color: white;
-  border-radius: 5%;
-  align-items: center;
-  text-align: center;
-}
+  color: white;}
 
-label {
+.formulario label {
   margin: 5px;
   font-size: 1.5rem;
   font-family: Playfair Display, sans-serif;
   color: white;
 }
 
-.cerrar {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.formulario button{
+  padding: 5px;
+  margin: 15px;
+  background-color: white;
+  border: 2px solid darkcyan;
+  font-size: 1.5rem;
+  font-family: Playfair Display, sans-serif;
+  color: darkcyan;
+  font-weight: bold;
+
 }
-.cerrar button {
+
+/* Ver Citas */
+.seccion-citas{
+  padding: 20px;
   background-color: darkcyan;
   color: white;
-  border-radius: 5%;
-  border: 2px solid white;
+}
+.seccion-citas h2{
+  text-align: center;
 }
 
-.cerrar button:hover {
-  border: 2px solid black;
-  color: darkcyan;
-  background-color: white;
-}
-
-.span_error {
-  color: red;
+.tabla{
+  width: 100%;
   font-size: 1rem;
-  font-weight: bold;
-  font-family: "Girassol", cursive;
+  font-family: Playfair Display, sans-serif;
+  font-weight:lighter;
 }
+.tabla button{
+  background-color: white;
+  border: 2px solid darkcyan;
+  font-size: 1rem;
+  font-family: Playfair Display, sans-serif;
+  color: darkcyan;
+  font-weight: bold;
+}
+.botonOcultar{
+  background-color: white;
+  border: 2px solid darkcyan;
+  font-size: 1rem;
+  font-family: Playfair Display, sans-serif;
+  color: darkcyan;
+  font-weight: bold;
+
+}
+button:hover{
+  background-color: darkcyan;
+  border: 2px solid white;
+  color: white;
+}
+
+
+
+/* Footer */
+.footer{
+  padding-top: 50px;
+  background-color: darkcyan;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+}
+
+.logoFooter{
+  margin-top: -20px;
+  width: 200px;
+}
+
+.footer span{
+  border: 2px solid darkcyan;
+  font-size:1rem;
+  font-family: Playfair Display, sans-serif;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+
 
 /* Adaptable Responsivo */
