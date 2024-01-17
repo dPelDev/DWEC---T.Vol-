@@ -9,18 +9,6 @@ section {
   align-items: center;
   justify-content: center;
 }
-
-h1 {
-  font-size: 2.5rem;
-  font-family: "Girassol", cursive;
-  color: white;
-  margin-top: -70px;
-  margin-left: 250px;
-}
-
-
-
-
 /* Seccion Portada */
 
 .portada {
@@ -37,14 +25,15 @@ h1 {
   margin: 20px;
 }
 
-.portada h1{
-  font-family: Playfair Display, sans-serif;
-  font-weight: bold;
+.subtitulo {
+  font-size: 2.5rem;
+  font-family: "Girassol", cursive;
   color: white;
-  margin-top: -70px;
-  margin-left: 300px;
+  margin-top: -4%;
+  margin-left: 17%;
 
 }
+
 /* Dar Citas */
 
 
