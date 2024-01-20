@@ -1,7 +1,3 @@
-const form_dar = document.querySelector("#dar_citas");
-
-//CrearCitas
-
 function validarTel() {
   var telef = new RegExp("^(\\+34|0034|34)?[6789]\\d{8}$");
   var telefono = document.getElementById("validationDefault03").value;
@@ -136,7 +132,7 @@ function guardarDatos() {
       actualizarTabla();
 
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "success",
         title: "Cita Creada con Exito",
         showConfirmButton: false,
@@ -145,9 +141,9 @@ function guardarDatos() {
     } else {
       console.log("DNI INCORRECTO");
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "error",
-        title: "El DNI no es correcto",
+        title: "El campo DNI NO es correcto",
         text: "Introduce otro válido",
         showConfirmButton: false,
         timer: 1500,
@@ -155,9 +151,9 @@ function guardarDatos() {
     }
   } else {
     Swal.fire({
-      position: "top-end",
+      position: "center",
       icon: "error",
-      title: "El TElÉFONO no es correcto",
+      title: "El campo teléfono NO es correcto",
       text: "Introduce otro válido",
       showConfirmButton: false,
       timer: 1500,
@@ -202,9 +198,7 @@ function guardarNuevaCita() {
   }
 }
 
-//Cargar y modificar/eliminar citas
 
-// Lógica para cargar citas almacenadas en las cookies
 function cargarCitasDesdeCookies() {
   try {
     const citasGuardadas = JSON.parse(localStorage.getItem("citas")) || [];
@@ -231,21 +225,19 @@ function cargarCitasDesdeCookies() {
   }
 }
 
-// Función para eliminar una cita
 function eliminarCita(index) {
    citas.splice(index, 1);
    actualizarTabla();
    guardarCitasEnCookies();
 }
 
-//Función para ver el ID
 function verId(index) {
   const cita = citas[index];
   Swal.fire("El ID de este CLIENTE es: ", cita.id);
 
   
 }
-// Función para cargar una cita para modificar
+
  function cargarCitaParaModificar(index) {
 
    const cita = citas[index];
